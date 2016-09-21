@@ -4,10 +4,13 @@ local assets =  require "src.assets"
 function Player:new()
 	self.isPlayer = true
 
-	self.sprite = assets.player
+	-- transform
 	self.pos = { x = love.graphics.getWidth() / 2, y = love.graphics.getHeight() / 2 }
 	self.scale = {}
 	self.rot = 0
+
+	-- sprite component
+	self.sprite = assets.player
 	self.offset = { x = self.sprite:getWidth() / 2, y = self.sprite:getHeight() / 2 }
 
 	-- rotatable component

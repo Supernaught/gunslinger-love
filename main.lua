@@ -3,8 +3,10 @@ io.stdout:setvbuf("no")
 -- Global libraries
 class = require "lib.30log"
 tiny = require "lib.tiny"
-Gamestate = require "lib.hump.gamestate"
 editgrid = require "lib.editgrid"
+log = require "lib.log"
+tlog = require "lib.alfonzm.tlog"
+Gamestate = require "lib.hump.gamestate"
 Object = require "lib.classic"
 
 -- States
@@ -17,7 +19,7 @@ camera = nil
 
 function love.load()
 	Gamestate.registerEvents()
-	Gamestate.switch(MenuState)
+	Gamestate.switch(PlayState)
 end
 
 function love.update(dt)
