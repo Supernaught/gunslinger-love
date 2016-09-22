@@ -15,12 +15,12 @@ function Bullet:new(x, y, angle, speed)
 	-- Bullet
 	self.sprite = assets.player
 	self.offset = { x = self.sprite:getWidth() / 2, y = self.sprite:getHeight() / 2 }
-	self.speed = speed or 400
 
 	-- MoveTowardsAngle component
 	self.moveTowardsAngle = true
 
 	-- movable component
+	self.speed = speed or 400
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },

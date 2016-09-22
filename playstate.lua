@@ -2,6 +2,7 @@ playstate = {}
 
 local UIText = require "src.entities.UIText"
 local Player = require "src.entities.Player"
+local Enemy = require "src.entities.Enemy"
 local Camera = require "lib.hump.camera"
 
 local player
@@ -18,13 +19,15 @@ function playstate:init()
 		require("src.systems.UpdateSystem")(),
 		require("src.systems.ShooterSystem")(),
 		require("src.systems.MoveTowardsAngleSystem")(),
+		require("src.systems.MoveTowardsTargetSystem")(),
 		require("src.systems.SpriteSystem")(),
 		require("src.systems.PlayerInputSystem")(),
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
 		uiScore,
-		player
+		player,
+		Enemy(20, 20)
 	)
 
 	world = self.world

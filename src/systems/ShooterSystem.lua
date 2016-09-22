@@ -9,8 +9,6 @@ end
 function ShooterSystem:process(e, dt)
 	local s = e.shooter
 
-	tlog.print(s)
-
 	if s.shoot then
 		s.shoot = false
 
