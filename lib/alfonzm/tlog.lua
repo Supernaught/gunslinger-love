@@ -29,7 +29,7 @@ end
 -- print table inline
 tlog.print = function(t)
 	info = debug.getinfo(2, "Sl")
-	lineinfo = info.short_src .. ":" .. info.currentline .. ":"
+	lineinfo = info.short_src .. ":" .. info.currentline .. ": "
 	io.write(lineinfo)
 	if t and type(t) == 'table' then
 		io.write(tlog.stringify(t))

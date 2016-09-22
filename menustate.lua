@@ -1,5 +1,4 @@
 menustate = {}
-
 local UIText = require "src.entities.UIText"
 local PlayState = require "playstate"
 

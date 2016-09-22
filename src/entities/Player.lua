@@ -5,9 +5,9 @@ function Player:new()
 	self.isPlayer = true
 
 	-- transform
-	self.pos = { x = love.graphics.getWidth() / 2, y = love.graphics.getHeight() / 2 }
+	self.pos = { x = love.graphics.getWidth() / 2 / 2, y = love.graphics.getHeight() / 2 / 2 }
 	self.scale = {}
-	self.rot = 0
+	self.angle = 0 -- in radians
 
 	-- sprite component
 	self.sprite = assets.player
@@ -15,17 +15,18 @@ function Player:new()
 
 	-- rotatable component
 	self.rotatable = {
-		speed = 10,
 		velocity = 0,
 		acceleration = 0,
 		drag = 30,
-		maxVelocity = 12
+		maxVelocity = 12 -- rotate speed
 	}
 
 	-- shooter component
-	self.shooter = true
-	self.atkDelay = 0.2
-	-- self.canAtk
+	self.shooter = {
+		atkDelay = 0.04,
+		canAtk = true,
+		shoot = false -- if shoot input is pressed
+	}
 
 	return self
 end

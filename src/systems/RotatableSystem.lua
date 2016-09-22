@@ -10,7 +10,7 @@ local lume = require "lib.lume"
 local RotatableSystem = tiny.processingSystem(class "RotatableSystem")
 
 function RotatableSystem:init()
-	self.filter = tiny.requireAll("rotatable", "rot")
+	self.filter = tiny.requireAll("rotatable", "angle")
 end
 
 function RotatableSystem:process(e, dt)
@@ -36,7 +36,7 @@ function RotatableSystem:process(e, dt)
 
 	-- update rot
 	if rot.velocity ~= 0 then
-		e.rot = e.rot + rot.velocity * dt
+		e.angle = e.angle + rot.velocity * dt
 	end
 end
 
