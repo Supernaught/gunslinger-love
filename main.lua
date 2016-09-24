@@ -7,6 +7,10 @@ editgrid = require "lib.editgrid"
 Gamestate = require "lib.hump.gamestate"
 Object = require "lib.classic"
 
+-- Ulydev camera options
+screen = require "lib.shack"
+push = require "lib.push"
+
 -- utils
 log = require "lib.log"
 tlog = require "lib.alfonzm.tlog"
@@ -20,29 +24,28 @@ local MenuState = require "menustate"
 world = {}
 camera = nil
 
--- canvas
-local canvas = love.graphics.newCanvas(480,360)
-local scale = 2
-
 function love.load()
+	-- setup push screen
+	local windowWidth, windowHeight = love.graphics.getWidth(), love.graphics.getHeight()
+	local scale = 3
+	local gameWidth, gameHeight = windowWidth / scale, windowHeight / scale
+	push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen = false})
+	screen:setDimensions(push:getDimensions())
+
 	Gamestate.registerEvents()
 	Gamestate.switch(PlayState)
 end
 
 function love.update(dt)
+	screen:update(dt)
 end
 
 function love.draw()
-	love.graphics.setCanvas(canvas)
-
-	-- if camera then camera:attach() end
+	push:apply("start")
+	screen:apply()
 	
 	if world and world.update then
 		world:update(love.timer.getDelta())
 	end
-
-	-- if camera then camera:detach() end
-
-	love.graphics.setCanvas()
-	love.graphics.draw(canvas,0,0,0,scale,scale)
+	push:apply("end")
 end

@@ -20,8 +20,12 @@ function ShooterSystem:process(e, dt)
 	tick.update(dt)
 end
 
+-- actually fire a bullet
 function ShooterSystem:shoot(e, dt, s)
-	world:addEntity(Bullet(e.pos.x, e.pos.y, e.angle - math.rad(90)))
+	world:addEntity(Bullet(e.pos.x, e.pos.y, e.angle))
+
+	screen:setShake(4)
+	screen:setRotation(0.05)
 
 	s.canAtk = false
 	tick.delay(function() s.canAtk = true end, s.atkDelay)

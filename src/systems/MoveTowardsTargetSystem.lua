@@ -13,7 +13,6 @@ MoveTowardsTargetSystem.filter = tiny.requireAll("moveTowardsTarget")
 
 function MoveTowardsTargetSystem:process(e, dt)
 	e.angle = self:getAngleFromTargetPos(e)
-	print('asd')
 	e.movable.velocity.x = math.cos(e.angle) * e.speed
 	e.movable.velocity.y = math.sin(e.angle) * e.speed
 end

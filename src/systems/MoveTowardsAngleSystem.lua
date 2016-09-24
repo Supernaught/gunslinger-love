@@ -10,8 +10,8 @@ local MoveTowardsAngleSystem = tiny.processingSystem(class "MoveTowardsAngleSyst
 MoveTowardsAngleSystem.filter = tiny.requireAll("moveTowardsAngle", "movable")
 
 function MoveTowardsAngleSystem:process(e, dt)
-	e.movable.velocity.x = math.cos(e.angle) * e.speed
-	e.movable.velocity.y = math.sin(e.angle) * e.speed
+	e.movable.velocity.x = math.cos(e.angle - math.rad(90)) * e.speed
+	e.movable.velocity.y = math.sin(e.angle - math.rad(90)) * e.speed
 end
 
 return MoveTowardsAngleSystem

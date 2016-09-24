@@ -15,7 +15,7 @@ function Enemy:new(x, y)
 
 	-- move to player
 	self.moveTowardsTarget = true
-	self.targetPos = { x = love.graphics.getWidth() / 2 / 2, y = love.graphics.getHeight() / 2 / 2 }
+	self.targetPos = { x = getPlayer().pos.x, y = getPlayer().pos.y }
 
 	-- movable component
 	self.speed = speed or 100

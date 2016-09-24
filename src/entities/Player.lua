@@ -5,7 +5,7 @@ function Player:new()
 	self.isPlayer = true
 
 	-- transform
-	self.pos = { x = love.graphics.getWidth() / 2 / 2, y = love.graphics.getHeight() / 2 / 2 }
+	self.pos = { x = push:getWidth() / 2, y = push:getHeight() / 2 }
 	self.scale = {}
 	self.angle = 0 -- in radians
 
@@ -18,14 +18,30 @@ function Player:new()
 		velocity = 0,
 		acceleration = 0,
 		drag = 30,
-		maxVelocity = 12 -- rotate speed
+		maxVelocity = 8 -- rotate speed
+	}
+
+	-- movable component
+	self.speed = 0
+	self.movable = {
+		velocity = { x = 0, y = 0 },
+		acceleration = { x = 0, y = 0 },
+		drag = { x = 0, y = 0 },
+		maxVelocity = { x = 0, y = 0 },
 	}
 
 	-- shooter component
 	self.shooter = {
-		atkDelay = 0.04,
+		atkDelay = 0.06,
 		canAtk = true,
 		shoot = false -- if shoot input is pressed
+	}
+
+	-- collider component
+	self.collider = {
+		w = self.sprite:getWidth(),
+		h = self.sprite:getHeight(),
+		isSolid = true
 	}
 
 	return self
