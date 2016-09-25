@@ -1,55 +1,51 @@
+-- 
+-- CollisionSystem
+-- by Alphonsus
+--
+-- Required:
+--   self.collider = HC.rectangle(self.pos.x, self.pos.y, self.sprite:getWidth(), self.sprite:getHeight())
+--   self.collider['parent'] = self
+--
+-- Optional callback function:
+--   function Object:onCollision(other, delta) end
+--
+
 local CollisionSystem = tiny.processingSystem(class "CollisionSystem")
 
-CollisionSystem.filter = tiny.requireAll("collider", "pos", "movable")
+CollisionSystem.filter = tiny.requireAll("collider", "pos")
 
 function CollisionSystem:init()
 end
 
 function CollisionSystem:process(e, dt)
-	-- print(bumpWorld:countItems())
-
 	local pos = e.pos
 	local vel = e.movable.velocity
+	local col = e.collider
 
-    pos.x, pos.y, cols, len = bumpWorld:move(e, pos.x, pos.y, collisionFilter)
+	-- update rotation
+	col:setRotation(e.angle)
 
-	for i=1,len do
-		print(i .. ' collided with ' .. tostring(cols[i].other))
-		-- bumpWorld:remove(cols[i].other)
-	end
-end
+	-- update position
+	col:moveTo(pos.x, pos.y)
 
-function collisionFilter(e1,e2)
-	if e1.isBullet then
-		if e2.isEnemy then
-			e2:die()
-			-- bumpWorld:remove(e2)
-			return "cross"
-		elseif e2.isBullet then
-			return nil
-		end
+	-- check collisions
+	for col2, delta in pairs(HC:collisions(col)) do
+		col.parent:onCollision(col2.parent, delta)
 	end
 
-	print(e1.name .. ' / ' .. e2.name )
+	if col.toRemove then
+		HC:remove(col)
+	end
 
-	-- if e1.isPlayer then
-	-- 	print('player')
-	-- elseif e1.isBullet then
-	-- 	print('bullet')
-	-- elseif e1.isEnemy then
-	-- 	print('enemy')
+	-- if col2.toRemove then
+		-- HC:remove(col2)
 	-- end
 end
 
 function CollisionSystem:onAdd(e)
-    local pos = e.pos
-    local col = e.collider
-    bumpWorld:add(e, pos.x, pos.y, col.w, col.h)
 end
 
 function CollisionSystem:onRemove(e)
-    bumpWorld:remove(e)
 end
-
 
 return CollisionSystem

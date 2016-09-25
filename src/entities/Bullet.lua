@@ -21,7 +21,7 @@ function Bullet:new(x, y, angle, speed)
 	self.moveTowardsAngle = true
 
 	-- movable component
-	self.speed = speed or 100
+	self.speed = speed or 200
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },
@@ -38,27 +38,29 @@ function Bullet:new(x, y, angle, speed)
 		maxVelocity = 12
 	}
 
-	-- collider
-	self.collider = {
-		w = self.sprite:getWidth(),
-		h = self.sprite:getHeight(),
-		isSolid = true
-	}
-
 	-- randomize a bit
 	-- self.pos.x = self.pos.x + lume.random(5,10)
 	-- self.pos.y = self.pos.y + lume.random(5,10)
+	self.angle = self.angle + lume.random(-0.05,0.05)
 
 	-- add small padding in front of player
 	self.pos.x = self.pos.x + (self.pos.x * math.cos(self.angle - math.rad(90)) * 0.12)
 	self.pos.y = self.pos.y + (self.pos.y * math.sin(self.angle - math.rad(90)) * 0.12)
 
+	-- collider
+	self.collider = HC:rectangle(self.pos.x - self.offset.x, self.pos.y - self.offset.y, self.sprite:getWidth(), self.sprite:getHeight())
+	self.collider['parent'] = self
 
 	return self
 end
 
 function Bullet:update(dt)
-	-- self:setVelocityFromAngle()
+end
+
+function Bullet:onCollision(other)
+	if other.isEnemy and other.isAlive then
+		self.toRemove = true
+	end
 end
 
 return Bullet

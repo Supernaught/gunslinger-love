@@ -33,7 +33,7 @@ function Player:new()
 
 	-- shooter component
 	self.shooter = {
-		atkDelay = 0.06,
+		atkDelay = 0.1,
 		canAtk = true,
 		shoot = false -- if shoot input is pressed
 	}

@@ -2,7 +2,7 @@ playstate = {}
 
 -- lib
 local Camera = require "lib.hump.camera"
-local bump = require "lib.bump"
+local HClib = require "lib.hc"
 
 -- entities
 local UIText = require "src.entities.UIText"
@@ -14,15 +14,15 @@ local player
 local uiScore
 local score = 0
 
-bumpWorld = nil
 world = nil
+HC = nil
 
 function playstate:init()
-	bumpWorld = bump.newWorld(10)
-
 	uiScore = UIText(score, 20, 20, nil, "left", 12)
 	player = Player()
 	camera = Camera(player.pos.x, player.pos.y)
+
+	HC = HClib.new(150)
 
 	self.world = tiny.world(
 		require("src.systems.BGColorSystem")(50,50,50),
@@ -36,7 +36,7 @@ function playstate:init()
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
-		uiScore,
+		-- uiScore,
 		player,
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
@@ -53,6 +53,10 @@ function love.keypressed(k)
 	elseif k == 's' then
 		screen:setShake(70)
 	end
+end
+
+function playstate:update(dt)
+	-- print(world:getEntityCount())
 end
 
 function getPlayer()

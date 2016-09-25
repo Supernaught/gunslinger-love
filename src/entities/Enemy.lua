@@ -7,6 +7,7 @@ function Enemy:new(x, y)
 
 	-- entity
 	self.toRemove = false
+	self.isAlive = true
 
 	-- transform
 	self.pos = { x = x or 20, y = y or 20 }
@@ -22,7 +23,7 @@ function Enemy:new(x, y)
 	self.targetPos = { x = getPlayer().pos.x, y = getPlayer().pos.y }
 
 	-- movable component
-	self.speed = speed or 50
+	self.speed = speed or 60
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },
@@ -46,20 +47,30 @@ function Enemy:new(x, y)
 	}
 
 	-- collider
-	self.collider = {
-		w = self.sprite:getWidth(),
-		h = self.sprite:getHeight(),
-		isSolid = true
-	}
+	self.collider = HC:rectangle(self.pos.x - self.offset.x, self.pos.y - self.offset.y, self.sprite:getWidth(), self.sprite:getHeight())
+	self.collider['parent'] = self
+
+	-- setmetatable(self, { __index = collider })
 
 	return self
 end
 
 function Enemy:update(dt)
+	self.collider:rotate(self.angle)
 end
 
-function Enemy:die(dt)
+function Enemy:onCollision(other)
+	if other.isBullet and self.isAlive then
+		self:die()
+	end
+end
+
+function Enemy:hit(damage)
+end
+
+function Enemy:die()
 	self.toRemove = true
+	self.isAlive = false
 	print("DIE")
 end
 
