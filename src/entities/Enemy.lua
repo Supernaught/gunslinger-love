@@ -2,7 +2,11 @@ local Enemy = Object:extend()
 local assets =  require "src.assets"
 
 function Enemy:new(x, y)
+	self.name = "Enemy"
 	self.isEnemy = true
+
+	-- entity
+	self.toRemove = false
 
 	-- transform
 	self.pos = { x = x or 20, y = y or 20 }
@@ -18,7 +22,7 @@ function Enemy:new(x, y)
 	self.targetPos = { x = getPlayer().pos.x, y = getPlayer().pos.y }
 
 	-- movable component
-	self.speed = speed or 100
+	self.speed = speed or 50
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },
@@ -41,10 +45,22 @@ function Enemy:new(x, y)
 		shoot = false -- if shoot input is pressed
 	}
 
+	-- collider
+	self.collider = {
+		w = self.sprite:getWidth(),
+		h = self.sprite:getHeight(),
+		isSolid = true
+	}
+
 	return self
 end
 
 function Enemy:update(dt)
+end
+
+function Enemy:die(dt)
+	self.toRemove = true
+	print("DIE")
 end
 
 return Enemy

@@ -5,7 +5,7 @@ local lume = require "lib.lume"
 -- local playstate = require "playstate"
 
 function Bullet:new(x, y, angle, speed)
-
+	self.name = "Bullet"
 	self.isBullet = true
 
 	self.pos = { x = x or 0, y = y or 0 }
@@ -21,7 +21,7 @@ function Bullet:new(x, y, angle, speed)
 	self.moveTowardsAngle = true
 
 	-- movable component
-	self.speed = speed or 500
+	self.speed = speed or 100
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },

@@ -14,8 +14,11 @@ local player
 local uiScore
 local score = 0
 
+bumpWorld = nil
+world = nil
+
 function playstate:init()
-	self.bumpWorld = bump.newWorld(10)
+	bumpWorld = bump.newWorld(10)
 
 	uiScore = UIText(score, 20, 20, nil, "left", 12)
 	player = Player()
@@ -24,7 +27,7 @@ function playstate:init()
 	self.world = tiny.world(
 		require("src.systems.BGColorSystem")(50,50,50),
 		require("src.systems.UpdateSystem")(),
-		require("src.systems.CollisionSystem")(self.bumpWorld),
+		require("src.systems.CollisionSystem")(),
 		require("src.systems.ShooterSystem")(),
 		require("src.systems.MoveTowardsAngleSystem")(),
 		require("src.systems.MoveTowardsTargetSystem")(),
@@ -34,8 +37,10 @@ function playstate:init()
 		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
 		uiScore,
-		player
-		-- Enemy(20, 20)
+		player,
+		-- Enemy(180, 200),
+		-- Enemy(0, 100),
+		Enemy(20,20)
 	)
 
 	world = self.world

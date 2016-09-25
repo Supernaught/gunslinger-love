@@ -13,8 +13,8 @@ MoveTowardsTargetSystem.filter = tiny.requireAll("moveTowardsTarget")
 
 function MoveTowardsTargetSystem:process(e, dt)
 	e.angle = self:getAngleFromTargetPos(e)
-	e.movable.velocity.x = math.cos(e.angle) * e.speed
-	e.movable.velocity.y = math.sin(e.angle) * e.speed
+	e.movable.velocity.x = math.cos(e.angle - math.rad(90)) * e.speed
+	e.movable.velocity.y = math.sin(e.angle - math.rad(90)) * e.speed
 end
 
 function MoveTowardsTargetSystem:setTargetPos(x, y)
@@ -29,7 +29,7 @@ function MoveTowardsTargetSystem:setTargetPos(x, y)
 end
 
 function MoveTowardsTargetSystem:getAngleFromTargetPos(e)
-	return math.atan2((e.targetPos.y - e.pos.y), (e.targetPos.x - e.pos.x))
+	return math.atan2((e.targetPos.y - e.pos.y), (e.targetPos.x - e.pos.x)) + math.rad(90)
 end
 
 return MoveTowardsTargetSystem

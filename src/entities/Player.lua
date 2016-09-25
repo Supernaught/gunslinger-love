@@ -2,6 +2,7 @@ local Player = Object:extend()
 local assets =  require "src.assets"
 
 function Player:new()
+	self.name = "Player"	
 	self.isPlayer = true
 
 	-- transform
@@ -38,11 +39,11 @@ function Player:new()
 	}
 
 	-- collider component
-	self.collider = {
-		w = self.sprite:getWidth(),
-		h = self.sprite:getHeight(),
-		isSolid = true
-	}
+	-- self.collider = {
+	-- 	w = self.sprite:getWidth(),
+	-- 	h = self.sprite:getHeight(),
+	-- 	isSolid = true
+	-- }
 
 	return self
 end
