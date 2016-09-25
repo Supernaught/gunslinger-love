@@ -9,6 +9,7 @@ local UIText = require "src.entities.UIText"
 local Player = require "src.entities.Player"
 local Enemy = require "src.entities.Enemy"
 local Bullet = require "src.entities.Bullet"
+local Spawner = require "src.entities.Spawner"
 
 local player
 local uiScore
@@ -26,6 +27,7 @@ function playstate:init()
 
 	self.world = tiny.world(
 		require("src.systems.BGColorSystem")(50,50,50),
+		require("src.systems.DestroyOffScreenSystem")(),
 		require("src.systems.UpdateSystem")(),
 		require("src.systems.CollisionSystem")(),
 		require("src.systems.ShooterSystem")(),
@@ -36,14 +38,16 @@ function playstate:init()
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
+		require("src.systems.SpawnerSystem")(),
 		-- uiScore,
-		player,
+		player
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
-		Enemy(20,20)
+		-- Enemy(20,20)
 	)
 
 	world = self.world
+	world:add(Spawner())
 end
 
 function love.keypressed(k)
@@ -57,6 +61,11 @@ end
 
 function playstate:update(dt)
 	-- print(world:getEntityCount())
+	self.FPS = love.timer.getFPS()
+end
+
+function playstate:draw()
+	love.graphics.print("FPS: " .. tostring(self.FPS) .. "\nEntities: " .. world:getEntityCount())
 end
 
 function getPlayer()

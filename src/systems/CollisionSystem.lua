@@ -6,13 +6,12 @@
 --   self.collider = HC.rectangle(self.pos.x, self.pos.y, self.sprite:getWidth(), self.sprite:getHeight())
 --   self.collider['parent'] = self
 --
--- Optional callback function:
 --   function Object:onCollision(other, delta) end
 --
 
 local CollisionSystem = tiny.processingSystem(class "CollisionSystem")
 
-CollisionSystem.filter = tiny.requireAll("collider", "pos")
+CollisionSystem.filter = tiny.requireAll("collider", "pos", "onCollision")
 
 function CollisionSystem:init()
 end

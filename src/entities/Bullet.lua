@@ -51,6 +51,9 @@ function Bullet:new(x, y, angle, speed)
 	self.collider = HC:rectangle(self.pos.x - self.offset.x, self.pos.y - self.offset.y, self.sprite:getWidth(), self.sprite:getHeight())
 	self.collider['parent'] = self
 
+	-- destroy if out of screen
+	self.destroyOffScreen = true
+
 	return self
 end
 
