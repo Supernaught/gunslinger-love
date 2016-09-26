@@ -21,14 +21,14 @@ function Spawner:spawn()
 
 	if spawnOnSide == 0 then
 		spawnPos.x = lume.randomchoice({0,push:getWidth()})
-		spawnPos.y = lume.random(0,push:getHeight())
+		spawnPos.y = math.random(0,push:getHeight())
 	else
-		spawnPos.x = lume.random(0,push:getWidth())
+		spawnPos.x = math.random(0,push:getWidth())
 		spawnPos.y = lume.randomchoice({0,push:getHeight()})
 	end
 
 	world:add(Enemy(spawnPos.x, spawnPos.y))
-	timer.after(lume.random(0.1,0.8), function() self:spawn() end)
+	timer.after(math.random(0.1,0.3), function() self:spawn() end)
 end
 
 return Spawner

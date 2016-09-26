@@ -19,7 +19,7 @@ function Player:new()
 		velocity = 0,
 		acceleration = 0,
 		drag = 30,
-		maxVelocity = 8 -- rotate speed
+		maxVelocity = 10 -- rotate speed
 	}
 
 	-- movable component
@@ -33,7 +33,7 @@ function Player:new()
 
 	-- shooter component
 	self.shooter = {
-		atkDelay = 0.1,
+		atkDelay = 0.05,
 		canAtk = true,
 		shoot = false -- if shoot input is pressed
 	}

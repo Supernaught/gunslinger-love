@@ -5,8 +5,10 @@ local lume = require "lib.lume"
 -- local playstate = require "playstate"
 
 function Bullet:new(x, y, angle, speed)
+	-- entity
 	self.name = "Bullet"
 	self.isBullet = true
+	self.isAlive = true
 
 	self.pos = { x = x or 0, y = y or 0 }
 	self.scale = {}
@@ -21,7 +23,7 @@ function Bullet:new(x, y, angle, speed)
 	self.moveTowardsAngle = true
 
 	-- movable component
-	self.speed = speed or 200
+	self.speed = speed or 400
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },
@@ -60,9 +62,11 @@ end
 function Bullet:update(dt)
 end
 
-function Bullet:onCollision(other)
+function Bullet:onCollision(other, delta)
 	if other.isEnemy and other.isAlive then
 		self.toRemove = true
+		other:onCollision(self, delta)
+		-- self.isAlive = false
 	end
 end
 

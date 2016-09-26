@@ -12,20 +12,14 @@ local MoveTowardsTargetSystem = tiny.processingSystem(class "MoveTowardsTargetSy
 MoveTowardsTargetSystem.filter = tiny.requireAll("moveTowardsTarget")
 
 function MoveTowardsTargetSystem:process(e, dt)
-	e.angle = self:getAngleFromTargetPos(e)
-	e.movable.velocity.x = math.cos(e.angle - math.rad(90)) * e.speed
-	e.movable.velocity.y = math.sin(e.angle - math.rad(90)) * e.speed
-end
+	local targetAngle = self:getAngleFromTargetPos(e)
 
-function MoveTowardsTargetSystem:setTargetPos(x, y)
-	self.targetPos.x = x
-	self.targetPos.y = y
+	if e.rotateTowardsTarget then
+		e.angle = targetAngle
+	end
 
-	self.angle = self:getAngleFromTargetPos()
-
-	self:setVelocityFromAngle()
-	-- self.movable.velocity.x = xTarget - self.movable.velocity.x
-	-- self.movable.velocity.y = yTarget - self.movable.velocity.y
+	e.movable.velocity.x = math.cos(targetAngle - math.rad(90)) * e.speed
+	e.movable.velocity.y = math.sin(targetAngle - math.rad(90)) * e.speed
 end
 
 function MoveTowardsTargetSystem:getAngleFromTargetPos(e)

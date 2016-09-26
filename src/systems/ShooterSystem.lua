@@ -1,6 +1,6 @@
 local ShooterSystem = tiny.processingSystem(class "ShooterSystem")
 local Bullet = require "src.entities.Bullet"
-local tick = require "lib.tick"
+local timer = require "lib.hump.timer"
 
 function ShooterSystem:init()
 	self.filter = tiny.requireAll("shooter")
@@ -17,18 +17,18 @@ function ShooterSystem:process(e, dt)
 		end
 	end
 
-	tick.update(dt)
+	-- timer.update(dt)
 end
 
 -- actually fire a bullet
 function ShooterSystem:shoot(e, dt, s)
 	world:addEntity(Bullet(e.pos.x, e.pos.y, e.angle))
 
-	screen:setShake(4)
-	screen:setRotation(0.05)
+	-- screen:setShake(2)
+	-- screen:setRotation(0.05)
 
 	s.canAtk = false
-	tick.delay(function() s.canAtk = true end, s.atkDelay)
+	timer.after(s.atkDelay, function() s.canAtk = true end)
 end
 
 return ShooterSystem

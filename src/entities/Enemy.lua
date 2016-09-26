@@ -15,15 +15,16 @@ function Enemy:new(x, y)
 	self.angle = 0 -- in radians
 
 	-- sprite component
-	self.sprite = assets.player
+	self.sprite = assets.enemy
 	self.offset = { x = self.sprite:getWidth() / 2, y = self.sprite:getHeight() / 2 }
 
 	-- move to player
 	self.moveTowardsTarget = true
+	self.rotateTowardsTarget = false
 	self.targetPos = { x = getPlayer().pos.x, y = getPlayer().pos.y }
 
 	-- movable component
-	self.speed = speed or 60
+	self.speed = speed or math.random(60,100)
 	self.movable = {
 		velocity = { x = 0, y = 0 },
 		acceleration = { x = 0, y = 0 },
@@ -56,11 +57,11 @@ function Enemy:new(x, y)
 end
 
 function Enemy:update(dt)
-	self.collider:rotate(self.angle)
+	-- self.collider:rotate(self.angle)
 end
 
 function Enemy:onCollision(other)
-	if other.isBullet and self.isAlive then
+	if other.isBullet and self.isAlive and other.isAlive then
 		self:die()
 	end
 end
@@ -70,8 +71,10 @@ end
 
 function Enemy:die()
 	self.toRemove = true
-	self.isAlive = false
-	print("DIE")
+	-- self.isAlive = false
+
+	screen:setShake(4)
+	screen:setRotation(0.05)
 end
 
 return Enemy
