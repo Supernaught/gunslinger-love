@@ -67,7 +67,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:onCollision(other)
-	if other.isBullet and self.isAlive and other.isAlive then
+	if other.isBullet and other.isAlive and self.isAlive then
 		self:hit()
 	end
 end
@@ -108,7 +108,7 @@ function Enemy:die()
 	screen:setShake(8)
 	screen:setRotation(0.05)
 
-	-- playstate.addScore()
+	PlayState.addScore()
 end
 
 function Enemy:draw()

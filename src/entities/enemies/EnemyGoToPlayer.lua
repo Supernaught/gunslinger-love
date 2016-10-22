@@ -30,19 +30,6 @@ function EnemyGoToPlayer:update(dt)
 	-- self.collider:rotate(self.angle)
 end
 
-function EnemyGoToPlayer:onCollision(other)
-	if other.isBullet and self.isAlive and other.isAlive then
-		self:die()
-	end
-end
-
-function EnemyGoToPlayer:hit(damage)
-end
-
-function EnemyGoToPlayer:die()
-	EnemyGoToPlayer.super.die(self)
-end
-
 function EnemyGoToPlayer:arrivedAtTarget()
 	if PlayState.getPlayer().isAlive then
 		self:die()

@@ -1,4 +1,4 @@
-playstate = {}
+local playstate = {}
 
 -- lib
 local Camera = require "lib.hump.camera"
@@ -21,8 +21,10 @@ HC = nil
 
 function playstate:enter()
 	timer.clear()
+
+	score = 0
 	
-	uiScore = UIText(score, 20, 20, nil, "left", 12)
+	uiScore = UIText(score, 0, 20, push:getWidth(), "center", 12)
 	player = Player()
 	camera = Camera(player.pos.x, player.pos.y)
 
@@ -40,8 +42,8 @@ function playstate:enter()
 		require("src.systems.PlayerInputSystem")(),
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
-		-- require("src.systems.DrawUISystem")("hudForeground"),
-		-- uiScore,
+		require("src.systems.DrawUISystem")("hudForeground"),
+		uiScore,
 		-- EnemyBasicWalker(0, 0),
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
@@ -50,7 +52,7 @@ function playstate:enter()
 	)
 
 	world = self.world
-	-- world:add(Spawner())
+	world:add(Spawner())
 end
 
 function playstate:keypressed(k)
@@ -83,4 +85,9 @@ function playstate.gameOver()
 	player:die()
 end
 
--- return playstate
+function playstate.addScore(scoreToAdd)
+	score = score + (scoreToAdd or 1)
+	uiScore.text = score
+end
+
+return playstate

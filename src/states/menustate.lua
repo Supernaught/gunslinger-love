@@ -35,7 +35,7 @@ end
 
 function menustate:keypressed(k)
 	if k == 'space' or k == 'return' then
-		Gamestate.switch(playstate)
+		Gamestate.switch(PlayState)
 	end
 end
 
