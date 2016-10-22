@@ -38,7 +38,7 @@ function MoveTowardsTargetSystem:process(e, dt)
 
 		if e.arrivedAtTarget and not e.arrivedCallbackIsCalled then
 			e.arrivedCallbackIsCalled = true
-			e.arrivedAtTarget()
+			e:arrivedAtTarget()
 		end
 	else
 		e.isInTargetPos = false

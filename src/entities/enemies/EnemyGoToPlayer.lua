@@ -14,7 +14,7 @@ function EnemyGoToPlayer:new(x, y)
 
 	-- move to player
 	self.moveTowardsTarget = true
-	self.targetPos = { x = playstate.getPlayer().pos.x, y = playstate.getPlayer().pos.y }
+	self.targetPos = { x = PlayState.getPlayer().pos.x, y = PlayState.getPlayer().pos.y }
 	self.moveTargetSpeed = 100
 
 	-- collider
@@ -44,7 +44,10 @@ function EnemyGoToPlayer:die()
 end
 
 function EnemyGoToPlayer:arrivedAtTarget()
-	playstate.gameOver()
+	if PlayState.getPlayer().isAlive then
+		self:die()
+		PlayState.gameOver()
+	end
 end
 
 return EnemyGoToPlayer

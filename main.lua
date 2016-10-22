@@ -42,6 +42,7 @@ end
 
 function love.update(dt)
 	screen:update(dt)
+	timer.update(dt)
 end
 
 function love.draw()
@@ -51,6 +52,7 @@ function love.draw()
 	if world and world.update then
 		world:update(love.timer.getDelta())
 	end
+
 	push:apply("end")
 end
 

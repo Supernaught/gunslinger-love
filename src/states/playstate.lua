@@ -40,10 +40,9 @@ function playstate:enter()
 		require("src.systems.PlayerInputSystem")(),
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
-		require("src.systems.DrawUISystem")("hudForeground"),
-		require("src.systems.SpawnerSystem")(),
+		-- require("src.systems.DrawUISystem")("hudForeground"),
 		-- uiScore,
-		EnemyBasicWalker(0, 0),
+		-- EnemyBasicWalker(0, 0),
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
 		-- Enemy(20,20)
@@ -51,7 +50,7 @@ function playstate:enter()
 	)
 
 	world = self.world
-	world:add(Spawner())
+	-- world:add(Spawner())
 end
 
 function playstate:keypressed(k)
@@ -61,19 +60,18 @@ function playstate:keypressed(k)
 	elseif k == 's' then
 		screen:setShake(70)
 	elseif k == 'q' then
-		Gamestate.switch(menustate)
+		Gamestate.switch(MenuState)
 	elseif k == 'r' then
-		Gamestate.switch(playstate)
+		Gamestate.switch(PlayState)
 	end
 end
 
 function playstate:update(dt)
 	-- print(world:getEntityCount())
-	self.FPS = love.timer.getFPS()
 end
 
 function playstate:draw()
-	love.graphics.print("FPS: " .. tostring(self.FPS) .. "\nEntities: " .. world:getEntityCount())
+	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()) .. "\nEntities: " .. world:getEntityCount())
 end
 
 function playstate.getPlayer()
@@ -81,7 +79,8 @@ function playstate.getPlayer()
 end
 
 function playstate.gameOver()
-	Gamestate.switch(menustate)
+	timer.after(2, function() Gamestate.switch(MenuState) end)
+	player:die()
 end
 
-return playstate
+-- return playstate

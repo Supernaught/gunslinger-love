@@ -94,9 +94,8 @@ end
 function Enemy:die()
 	self.toRemove = true
 
-	love.graphics.setColor(215, 232, 148)
 	love.graphics.setLineStyle('rough')
-	love.graphics.circle("fill", self.pos.x, self.pos.y, 15, 100 )
+	love.graphics.circle("fill", self.pos.x, self.pos.y, 20, 100 )
 
 	-- add 5 explosions
 	-- for i=5,1,-1
