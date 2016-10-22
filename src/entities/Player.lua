@@ -1,14 +1,14 @@
-local Player = Object:extend()
+-- requires
+local GameObject = require "src.entities.GameObject"
+local Bullet = require "src.entities.Bullet"
+
+local Player = GameObject:extend()
 local assets =  require "src.assets"
 
-function Player:new()
+function Player:new(x, y)
+	Player.super.new(self, x or push:getWidth()/2, y or push:getHeight()/2)
 	self.name = "Player"	
 	self.isPlayer = true
-
-	-- transform
-	self.pos = { x = push:getWidth() / 2, y = push:getHeight() / 2 }
-	self.scale = {}
-	self.angle = 0 -- in radians
 
 	-- sprite component
 	self.sprite = assets.player
@@ -38,14 +38,14 @@ function Player:new()
 		shoot = false -- if shoot input is pressed
 	}
 
-	-- collider component
-	-- self.collider = {
-	-- 	w = self.sprite:getWidth(),
-	-- 	h = self.sprite:getHeight(),
-	-- 	isSolid = true
-	-- }
-
 	return self
+end
+
+function Player:shoot()
+	world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle))
+
+	-- screen:setShake(2)
+	-- screen:setRotation(0.05)
 end
 
 function Player:update(dt)

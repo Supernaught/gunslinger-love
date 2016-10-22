@@ -22,8 +22,6 @@ function PlayerInputSystem:process(e, dt)
 
 	rot.velocity = rot.maxVelocity * leftRightSign
 
-	-- fire
-
 	-- press space
 	-- local keyFire = love.keyboard.isDown("space")
 	-- if keyFire and e.shooter.canAtk then
@@ -31,7 +29,6 @@ function PlayerInputSystem:process(e, dt)
 	-- end
 
 	e.shooter.shoot = keyLeft or keyRight or keyX
-
 end
 
 return PlayerInputSystem

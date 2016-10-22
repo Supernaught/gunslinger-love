@@ -50,10 +50,10 @@ function playstate:init()
 	world:add(Spawner())
 end
 
-function love.keypressed(k)
+function playstate:keypressed(k)
 	if k == 'space' then
 		screen:setShake(8)
-		screen:setRotation(.2)
+		-- screen:setRotation(.2)
 	elseif k == 's' then
 		screen:setShake(70)
 	end
