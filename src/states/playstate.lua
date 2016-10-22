@@ -66,6 +66,16 @@ function playstate:keypressed(k)
 	elseif k == 'r' then
 		Gamestate.switch(PlayState)
 	end
+
+	if k == '1' then
+		player:equipWeapon("pistol")
+	elseif k == '2' then
+		player:equipWeapon("machineGun")
+	elseif k == '3' then
+		player:equipWeapon("dualPistol")
+	elseif k == '4' then
+		player:equipWeapon("shotgun")
+	end
 end
 
 function playstate:update(dt)

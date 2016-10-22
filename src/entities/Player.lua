@@ -19,7 +19,9 @@ function Player:new(x, y)
 		velocity = 0,
 		acceleration = 0,
 		drag = 30,
-		maxVelocity = 10 -- rotate speed
+		defaultSpeed = 10,
+		speed = 10,
+		maxVelocity = nil -- rotate speed
 	}
 
 	-- movable component
@@ -38,14 +40,50 @@ function Player:new(x, y)
 		shoot = false -- if shoot input is pressed
 	}
 
+	-- OTHER PROPERTIES
+
+	self.weapon = nil
+	self:equipWeapon("pistol")
+
+	self.weaponShoots = {}
+	self:setupWeaponShoots()
+
 	return self
 end
 
 function Player:shoot()
-	world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle))
-
+	self.weaponShoots[self.weapon](self)
 	-- screen:setShake(2)
 	-- screen:setRotation(0.05)
+end
+
+function Player:setupWeaponShoots()
+	-- Pistol
+	self.weaponShoots.pistol = function(self)
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle))
+	end
+
+	-- Machinegun
+	self.weaponShoots.machineGun = self.weaponShoots.pistol
+
+	-- Dual pistol
+	self.weaponShoots.dualPistol = function(self)
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle))
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle + math.rad(180)))
+	end
+
+	-- Shotgun
+	self.weaponShoots.shotgun = function(self)
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle + math.rad(7)))
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle + math.rad(-7)))
+		world:addEntity(Bullet(self.pos.x, self.pos.y, self.angle))
+	end
+end
+
+function Player:equipWeapon(weapon)
+	self.weapon = weapon
+	self.shooter.atkDelay = reg.weaponStats[weapon].atkDelay
+	self.rotatable.speed = reg.weaponStats[weapon].rotateSpeed or self.rotatable.defaultSpeed
 end
 
 function Player:die()

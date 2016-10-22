@@ -20,7 +20,7 @@ function PlayerInputSystem:process(e, dt)
 		leftRightSign = 1
 	end
 
-	rot.velocity = rot.maxVelocity * leftRightSign
+	rot.velocity = rot.speed * leftRightSign
 
 	-- press space
 	-- local keyFire = love.keyboard.isDown("space")
