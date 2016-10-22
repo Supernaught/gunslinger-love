@@ -7,6 +7,7 @@ editgrid = require "lib.editgrid"
 Gamestate = require "lib.hump.gamestate"
 Object = require "lib.classic"
 timer = require "lib.hump.timer"
+anim8 = require "lib.anim8"
 
 -- Ulydev camera options
 screen = require "lib.shack"
@@ -18,13 +19,14 @@ tlog = require "lib.alfonzm.tlog"
 escquit = require "lib.alfonzm.escquit"
 
 -- States
-local PlayState = require "src.states.playstate"
-local MenuState = require "src.states.menustate"
+PlayState = require "src.states.playstate"
+MenuState = require "src.states.menustate"
 
 -- Game settings
-local scale = 3 -- should be the same as in conf
+local scale = 2 -- should be the same as in conf
 
 local assets =  require "src.assets"
+reg = require "src.reg"
 
 -- Declare tiny-ecs world
 world = {}
@@ -50,6 +52,14 @@ function love.draw()
 		world:update(love.timer.getDelta())
 	end
 	push:apply("end")
+end
+
+function love.keypressed(k)
+	if k == '`' then
+		reg.DEBUG_COLLIDERS = not reg.DEBUG_COLLIDERS
+	end
+
+	escquit:update(k)
 end
 
 function setupPushScreen()

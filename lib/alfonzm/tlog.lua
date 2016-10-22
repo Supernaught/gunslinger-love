@@ -2,6 +2,10 @@
 -- tlog
 -- by Alphonsus
 --
+-- Usage:
+--  object = {pos: {x = 0, y = 0}, speed: 10, name: 'lorem'}
+--	tlog.print(object)
+--
 
 tlog = {}
 

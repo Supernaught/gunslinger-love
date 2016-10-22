@@ -1,6 +1,7 @@
 --
 -- Explosion
 --
+local GameObject = require "src.entities.GameObject"
 
 local Explosion = GameObject:extend()
 local assets =  require "src.assets"

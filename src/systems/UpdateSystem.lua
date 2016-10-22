@@ -1,3 +1,13 @@
+--
+-- UpdateSystem
+-- by Alphonsus
+--
+-- calls entity's update() function, which is usually required for most objects
+--
+--	Required:
+--	function Object:update()
+--
+
 local UpdateSystem = tiny.processingSystem(class "UpdateSystem")
 
 UpdateSystem.filter = tiny.requireAll("update")

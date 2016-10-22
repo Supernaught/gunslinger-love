@@ -1,7 +1,7 @@
 local PlayerInputSystem = tiny.processingSystem(class "PlayerInputSystem")
 
 function PlayerInputSystem:init()
-	self.filter = tiny.requireAll("isPlayer", "shooter", "rotatable")
+	self.filter = tiny.requireAll("isPlayer")
 end
 
 function PlayerInputSystem:process(e, dt)

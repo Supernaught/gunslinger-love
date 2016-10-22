@@ -2,13 +2,14 @@ menustate = {}
 
 local flux = require "lib.flux"
 local UIText = require "src.entities.UIText"
-local PlayState = require "src.states.playstate"
 local assets =  require "src.assets"
 
 local title, pressToPlay
 local dir = 1
 
-function menustate:init()
+function menustate:enter()
+	timer.clear()
+	
 	local titleImage = UIText("GUNSLINGER", 0, 50, push:getWidth())
 	titleImage.shakyX = 0.7
 	titleImage.shakyY = 0.7

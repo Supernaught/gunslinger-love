@@ -4,6 +4,11 @@
 --
 -- set velocity towards angle
 --
+-- Required:
+-- 
+--	self.moveTowardsAngle = true
+--	self.movable (see MovableSystem)
+--
 
 local MoveTowardsAngleSystem = tiny.processingSystem(class "MoveTowardsAngleSystem")
 

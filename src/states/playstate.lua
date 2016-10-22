@@ -8,6 +8,7 @@ local HClib = require "lib.hc"
 local UIText = require "src.entities.UIText"
 local Player = require "src.entities.Player"
 local Enemy = require "src.entities.Enemy"
+local EnemyBasicWalker = require "src.entities.enemies.EnemyBasicWalker"
 local Bullet = require "src.entities.Bullet"
 local Spawner = require "src.entities.Spawner"
 
@@ -18,7 +19,9 @@ local score = 0
 world = nil
 HC = nil
 
-function playstate:init()
+function playstate:enter()
+	timer.clear()
+	
 	uiScore = UIText(score, 20, 20, nil, "left", 12)
 	player = Player()
 	camera = Camera(player.pos.x, player.pos.y)
@@ -40,10 +43,11 @@ function playstate:init()
 		require("src.systems.DrawUISystem")("hudForeground"),
 		require("src.systems.SpawnerSystem")(),
 		-- uiScore,
-		player
+		EnemyBasicWalker(0, 0),
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
 		-- Enemy(20,20)
+		player
 	)
 
 	world = self.world
@@ -56,6 +60,10 @@ function playstate:keypressed(k)
 		-- screen:setRotation(.2)
 	elseif k == 's' then
 		screen:setShake(70)
+	elseif k == 'q' then
+		Gamestate.switch(menustate)
+	elseif k == 'r' then
+		Gamestate.switch(playstate)
 	end
 end
 
@@ -68,8 +76,12 @@ function playstate:draw()
 	love.graphics.print("FPS: " .. tostring(self.FPS) .. "\nEntities: " .. world:getEntityCount())
 end
 
-function getPlayer()
+function playstate.getPlayer()
 	return player
+end
+
+function playstate.gameOver()
+	Gamestate.switch(menustate)
 end
 
 return playstate

@@ -3,6 +3,7 @@ local vector = require "lib.hump.vector"
 local lume = require "lib.lume"
 local timer = require "lib.hump.timer"
 local Enemy = require "src.entities.Enemy"
+local EnemyGoToPlayer = require "src.entities.enemies.EnemyGoToPlayer"
 
 function Spawner:new()
 	self.name = "Spawner"
@@ -27,7 +28,7 @@ function Spawner:spawn()
 		spawnPos.y = lume.randomchoice({0,push:getHeight()})
 	end
 
-	world:add(Enemy(spawnPos.x, spawnPos.y))
+	world:add(EnemyGoToPlayer(spawnPos.x, spawnPos.y))
 	timer.after(math.random(0.1,1), function() self:spawn() end)
 end
 

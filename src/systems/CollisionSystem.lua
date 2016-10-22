@@ -2,6 +2,9 @@
 -- CollisionSystem
 -- by Alphonsus
 --
+-- checks for collisions
+-- will call the onCollision() functions of the two colliding objects
+--
 -- Required:
 --   self.collider = HC.rectangle(self.pos.x, self.pos.y, self.sprite:getWidth(), self.sprite:getHeight())
 --   self.collider['parent'] = self
@@ -21,7 +24,9 @@ function CollisionSystem:process(e, dt)
 	local vel = e.movable.velocity
 	local col = e.collider
 
-	e.collider:draw()
+	if reg.DEBUG_COLLIDERS then
+		e.collider:draw()
+	end
 
 	-- update rotation
 	col:setRotation(e.angle)
@@ -32,7 +37,7 @@ function CollisionSystem:process(e, dt)
 	-- check collisions
 	for col2, delta in pairs(HC:collisions(col)) do
 		col.parent:onCollision(col2.parent, delta)
-		-- col2.parent:onCollision(col.parent, delta)
+		col2.parent:onCollision(col.parent, delta)
 	end
 
 	if col.toRemove then
