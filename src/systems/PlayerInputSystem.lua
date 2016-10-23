@@ -6,7 +6,6 @@ end
 
 function PlayerInputSystem:process(e, dt)
 	-- rotate left or right
-	local rot = e.rotatable
 	local keyLeft, keyRight = love.keyboard.isDown("left"), love.keyboard.isDown("right")
 	local keyX = love.keyboard.isDown("x")
 
@@ -20,7 +19,8 @@ function PlayerInputSystem:process(e, dt)
 		leftRightSign = 1
 	end
 
-	rot.velocity = rot.speed * leftRightSign
+	local s = e.shooter
+	s.shootAngle = s.shootAngle + (s.rotateSpeed * leftRightSign * dt)
 
 	-- press space
 	-- local keyFire = love.keyboard.isDown("space")

@@ -6,8 +6,12 @@ local vector = require "lib.hump.vector"
 local lume = require "lib.lume"
 -- local playstate = require "playstate"
 
-function Bullet:new(x, y, angle, speed)
+function Bullet:new(x, y, angle, speed, drawLayer)
 	Bullet.super.new(self, x, y)
+
+	if drawLayer then
+		self:setDrawLayer(drawLayer)
+	end
 
 	-- entity
 	self.name = "Bullet"
@@ -43,9 +47,9 @@ function Bullet:new(x, y, angle, speed)
 	-- self.pos.y = self.pos.y + lume.random(5,10)
 	self.angle = angle + lume.random(-0.05,0.05)
 
-	-- add small padding in front of player
-	self.pos.x = self.pos.x + (self.pos.x * math.cos(self.angle - math.rad(90)) * 0.12)
-	self.pos.y = self.pos.y + (self.pos.y * math.sin(self.angle - math.rad(90)) * 0.12)
+	-- add small padding in front of shooter
+	self.pos.x = self.pos.x + (self.pos.x * math.cos(self.angle - math.rad(90)) * 0.2)
+	self.pos.y = self.pos.y + (self.pos.y * math.sin(self.angle - math.rad(90)) * 0.2)
 
 	-- collider
 	self.collider = HC:rectangle(self.pos.x - self.offset.x, self.pos.y - self.offset.y, self.sprite:getWidth(), self.sprite:getHeight())
