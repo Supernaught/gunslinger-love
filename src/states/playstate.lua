@@ -21,6 +21,7 @@ HC = nil
 
 function playstate:enter()
 	timer.clear()
+	HC = HClib.new(150)
 
 	score = 0
 	
@@ -28,7 +29,6 @@ function playstate:enter()
 	player = Player()
 	camera = Camera(player.pos.x, player.pos.y)
 
-	HC = HClib.new(150)
 
 	self.world = tiny.world(
 		require("src.systems.BGColorSystem")(50,50,50),
@@ -39,9 +39,11 @@ function playstate:enter()
 		require("src.systems.MoveTowardsAngleSystem")(),
 		require("src.systems.MoveTowardsTargetSystem")(),
 		require("src.systems.SpriteSystem")(),
+		require("src.systems.SpriteSystem")("player"),
+		require("src.systems.SpriteSystem")("playerBullet"),
 		require("src.systems.PlayerInputSystem")(),
 		require("src.systems.MovableSystem")(),
-		require("src.systems.RotatableSystem")(),
+		-- require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
 		uiScore,
 		-- EnemyBasicWalker(0, 0),
@@ -52,7 +54,7 @@ function playstate:enter()
 	)
 
 	world = self.world
-	world:add(Spawner())
+	-- world:add(Spawner())
 end
 
 function playstate:keypressed(k)
@@ -65,6 +67,16 @@ function playstate:keypressed(k)
 		Gamestate.switch(MenuState)
 	elseif k == 'r' then
 		Gamestate.switch(PlayState)
+	end
+
+	if k == '1' then
+		player:equipWeapon("pistol")
+	elseif k == '2' then
+		player:equipWeapon("machineGun")
+	elseif k == '3' then
+		player:equipWeapon("dualPistol")
+	elseif k == '4' then
+		player:equipWeapon("shotgun")
 	end
 end
 

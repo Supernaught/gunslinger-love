@@ -20,7 +20,7 @@ function RotatableSystem:process(e, dt)
 		-- update velocity
 		rot.velocity = rot.velocity + rot.acceleration * dt
 		-- update max velocity
-		if math.abs(rot.velocity) > rot.maxVelocity then
+		if rot.maxVelocity and math.abs(rot.velocity) > rot.maxVelocity then
 			rot.velocity = rot.maxVelocity * lume.sign(rot.velocity)
 		end
 	elseif(rot.velocity ~= 0 and rot.drag > 0) then

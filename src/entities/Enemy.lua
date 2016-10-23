@@ -15,10 +15,10 @@ function Enemy:new(x, y, xVel, yVel)
 	self.hp = 1
 
 	-- sprite/animation component
-	self.gridSize = {x = 12, y = 12}
 	self.sprite = assets.enemy
-	self.offset = { x = self.gridSize.x/2, y = self.gridSize.y/2 }
 	self.flippedH = false
+	self.gridSize = {x = 50, y = 50}
+	self.offset = { x = self.gridSize.x/2, y = self.gridSize.y/2 }
 	local g = anim8.newGrid(self.gridSize.x, self.gridSize.y, self.sprite:getWidth(), self.sprite:getHeight())
 	self.animation = anim8.newAnimation(g('1-3',1), 0.1)
 
@@ -106,7 +106,7 @@ function Enemy:die()
 	-- end
 
 	screen:setShake(8)
-	screen:setRotation(0.05)
+	-- screen:setRotation(0.05)
 
 	PlayState.addScore()
 end
