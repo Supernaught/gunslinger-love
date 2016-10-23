@@ -1,4 +1,4 @@
-menustate = {}
+local menustate = {}
 
 local flux = require "lib.flux"
 local UIText = require "src.entities.UIText"
@@ -10,9 +10,9 @@ local dir = 1
 function menustate:enter()
 	timer.clear()
 	
-	local titleImage = UIText("GUNSLINGER", 0, 50, push:getWidth())
-	titleImage.shakyX = 0.7
-	titleImage.shakyY = 0.7
+	local titleImage = UIText("GUNSLINGER", 0, 60, push:getWidth())
+	-- titleImage.shakyX = 0.7
+	-- titleImage.shakyY = 0.7
 
 	local pressStart = UIText("Press SPACE to start", 0, push:getHeight() - 50, push:getWidth(), nil, 10)
 
@@ -23,6 +23,8 @@ function menustate:enter()
 		titleImage,
 		pressStart
 	)
+
+	-- flux.to(titleImage.pos, 0.5, {y = 60})
 
 	world = self.world
 end
@@ -35,6 +37,10 @@ function menustate:keypressed(k)
 	if k == 'space' or k == 'return' then
 		Gamestate.switch(PlayState)
 	end
+end
+
+function menustate:draw()
+	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()) .. "\nEntities: " .. world:getEntityCount())
 end
 
 return menustate

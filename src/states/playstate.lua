@@ -1,4 +1,4 @@
-playstate = {}
+local playstate = {}
 
 -- lib
 local Camera = require "lib.hump.camera"
@@ -21,8 +21,10 @@ HC = nil
 
 function playstate:enter()
 	timer.clear()
+
+	score = 0
 	
-	uiScore = UIText(score, 20, 20, nil, "left", 12)
+	uiScore = UIText(score, 0, 20, push:getWidth(), "center", 12)
 	player = Player()
 	camera = Camera(player.pos.x, player.pos.y)
 
@@ -41,9 +43,8 @@ function playstate:enter()
 		require("src.systems.MovableSystem")(),
 		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
-		require("src.systems.SpawnerSystem")(),
-		-- uiScore,
-		EnemyBasicWalker(0, 0),
+		uiScore,
+		-- EnemyBasicWalker(0, 0),
 		-- Enemy(180, 200),
 		-- Enemy(0, 100),
 		-- Enemy(20,20)
@@ -61,19 +62,18 @@ function playstate:keypressed(k)
 	elseif k == 's' then
 		screen:setShake(70)
 	elseif k == 'q' then
-		Gamestate.switch(menustate)
+		Gamestate.switch(MenuState)
 	elseif k == 'r' then
-		Gamestate.switch(playstate)
+		Gamestate.switch(PlayState)
 	end
 end
 
 function playstate:update(dt)
 	-- print(world:getEntityCount())
-	self.FPS = love.timer.getFPS()
 end
 
 function playstate:draw()
-	love.graphics.print("FPS: " .. tostring(self.FPS) .. "\nEntities: " .. world:getEntityCount())
+	love.graphics.print("FPS: " .. tostring(love.timer.getFPS()) .. "\nEntities: " .. world:getEntityCount())
 end
 
 function playstate.getPlayer()
@@ -81,7 +81,13 @@ function playstate.getPlayer()
 end
 
 function playstate.gameOver()
-	Gamestate.switch(menustate)
+	timer.after(2, function() Gamestate.switch(MenuState) end)
+	player:die()
+end
+
+function playstate.addScore(scoreToAdd)
+	score = score + (scoreToAdd or 1)
+	uiScore.text = score
 end
 
 return playstate

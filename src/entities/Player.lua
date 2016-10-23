@@ -48,6 +48,15 @@ function Player:shoot()
 	-- screen:setRotation(0.05)
 end
 
+function Player:die()
+	love.graphics.setLineStyle('rough')
+	love.graphics.circle("fill", self.pos.x, self.pos.y, 30, 100)
+
+	screen:setShake(40)
+	self.isAlive = true
+	self.toRemove = true
+end
+
 function Player:update(dt)
 end
 

@@ -19,11 +19,11 @@ tlog = require "lib.alfonzm.tlog"
 escquit = require "lib.alfonzm.escquit"
 
 -- States
-PlayState = require "src.states.playstate"
 MenuState = require "src.states.menustate"
+PlayState = require "src.states.playstate"
 
 -- Game settings
-local scale = 2 -- should be the same as in conf
+local scale = 3 -- should be the same as in conf
 
 local assets =  require "src.assets"
 reg = require "src.reg"
@@ -42,6 +42,7 @@ end
 
 function love.update(dt)
 	screen:update(dt)
+	timer.update(dt)
 end
 
 function love.draw()
@@ -51,6 +52,7 @@ function love.draw()
 	if world and world.update then
 		world:update(love.timer.getDelta())
 	end
+
 	push:apply("end")
 end
 

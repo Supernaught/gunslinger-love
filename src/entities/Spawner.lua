@@ -13,7 +13,6 @@ function Spawner:new()
 end
 
 function Spawner:update(dt)
-	timer.update(dt)
 end
 
 function Spawner:spawn()
@@ -29,7 +28,7 @@ function Spawner:spawn()
 	end
 
 	world:add(EnemyGoToPlayer(spawnPos.x, spawnPos.y))
-	timer.after(math.random(0.1,1), function() self:spawn() end)
+	timer.after(math.random(0.05,0.7), function() self:spawn() end)
 end
 
 return Spawner
