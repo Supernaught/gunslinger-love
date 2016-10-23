@@ -8,9 +8,11 @@ local HClib = require "lib.hc"
 local UIText = require "src.entities.UIText"
 local Player = require "src.entities.Player"
 local Enemy = require "src.entities.Enemy"
+local EnemyGoToPlayer = require "src.entities.enemies.EnemyGoToPlayer"
 local EnemyBasicWalker = require "src.entities.enemies.EnemyBasicWalker"
 local Bullet = require "src.entities.Bullet"
 local Spawner = require "src.entities.Spawner"
+local Coin = require "src.entities.Coin"
 
 local player
 local uiScore
@@ -31,7 +33,7 @@ function playstate:enter()
 
 
 	self.world = tiny.world(
-		require("src.systems.BGColorSystem")(50,50,50),
+		require("src.systems.BGColorSystem")(65,23,67),
 		require("src.systems.DestroyOffScreenSystem")(),
 		require("src.systems.UpdateSystem")(),
 		require("src.systems.CollisionSystem")(),
@@ -43,18 +45,20 @@ function playstate:enter()
 		require("src.systems.SpriteSystem")("playerBullet"),
 		require("src.systems.PlayerInputSystem")(),
 		require("src.systems.MovableSystem")(),
-		-- require("src.systems.RotatableSystem")(),
+		require("src.systems.RotatableSystem")(),
 		require("src.systems.DrawUISystem")("hudForeground"),
+		require("src.systems.ShakySystem")(),
 		uiScore,
 		-- EnemyBasicWalker(0, 0),
-		-- Enemy(180, 200),
-		-- Enemy(0, 100),
-		-- Enemy(20,20)
+		-- EnemyGoToPlayer(180, 200),
+		-- EnemyGoToPlayer(0, 100),
+		-- EnemyGoToPlayer(20,20),
+		-- Coin(10,10),
 		player
 	)
 
 	world = self.world
-	-- world:add(Spawner())
+	world:add(Spawner())
 end
 
 function playstate:keypressed(k)

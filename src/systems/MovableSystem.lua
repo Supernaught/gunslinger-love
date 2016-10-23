@@ -48,7 +48,12 @@ function MovableSystem:process(e, dt)
 	end
 	if accel.y == 0 and drag.y ~= 0 then
 		local sign = lume.sign(vel.y)
-		vel.y = vel.y - drag.y * dt
+		vel.y = vel.y - drag.y * dt * sign
+
+		-- if no gravity
+		if (vel.y < 0) ~= (sign < 0) then
+			vel.y = 0
+		end
 	end
 end
 

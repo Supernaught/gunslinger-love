@@ -1,4 +1,3 @@
-local Explosion = require "src.entities.Explosion"
 local Enemy = require "src.entities.Enemy"
 
 local EnemyGoToPlayer = Enemy:extend()
@@ -9,9 +8,6 @@ function EnemyGoToPlayer:new(x, y)
 	self.name = "EnemyGoToPlayer"
 	self.isEnemyGoToPlayer = true
 
-	-- sprite component
-	-- self.sprite = assets.enemy
-
 	-- move to player
 	self.moveTowardsTarget = true
 	self.targetPos = { x = PlayState.getPlayer().pos.x, y = PlayState.getPlayer().pos.y }
@@ -21,13 +17,9 @@ function EnemyGoToPlayer:new(x, y)
 	self.collider = HC:rectangle(self.pos.x - self.offset.x, self.pos.y - self.offset.y, self.gridSize.x, self.gridSize.y)
 	self.collider['parent'] = self
 
-	-- setmetatable(self, { __index = collider })
+	-- self.rotatable = {speed = 0, velocity = 5, acceleration = 0, drag = 0, maxVelocity = nil }
 
 	return self
-end
-
-function EnemyGoToPlayer:update(dt)
-	-- self.collider:rotate(self.angle)
 end
 
 function EnemyGoToPlayer:arrivedAtTarget()

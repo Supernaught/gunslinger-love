@@ -2,6 +2,7 @@ local lume = require "lib.lume"
 
 local GameObject = require "src.entities.GameObject"
 local Explosion = require "src.entities.Explosion"
+local Coin = require "src.entities.Coin"
 
 local Enemy = GameObject:extend()
 local assets =  require "src.assets"
@@ -17,7 +18,7 @@ function Enemy:new(x, y, xVel, yVel)
 	-- sprite/animation component
 	self.sprite = assets.enemy
 	self.flippedH = false
-	self.gridSize = {x = 50, y = 50}
+	self.gridSize = {x = 25, y= 25}
 	self.offset = { x = self.gridSize.x/2, y = self.gridSize.y/2 }
 	local g = anim8.newGrid(self.gridSize.x, self.gridSize.y, self.sprite:getWidth(), self.sprite:getHeight())
 	self.animation = anim8.newAnimation(g('1-3',1), 0.1)
@@ -67,7 +68,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:onCollision(other)
-	if other.isBullet and other.isAlive and self.isAlive then
+	if other.isPlayerBullet and other.isAlive and not self.toRemove then
 		self:hit()
 	end
 end
@@ -75,7 +76,7 @@ end
 function Enemy:hit(damage)
 	self.hp = self.hp - (damage or 1)
 
-	if self.isAlive and not self.toRemove and self.hp <= 0 then
+	if self.hp <= 0 then
 		-- dead
 		self:die()
 	else
@@ -95,7 +96,7 @@ function Enemy:die()
 	self.toRemove = true
 
 	love.graphics.setLineStyle('rough')
-	love.graphics.circle("fill", self.pos.x, self.pos.y, 20, 100 )
+	love.graphics.circle("fill", self.pos.x, self.pos.y, 30, 100 )
 
 	-- add 5 explosions
 	-- for i=5,1,-1
@@ -103,6 +104,14 @@ function Enemy:die()
 	-- 	timer.after((lume.random(0, .2)), function()
 	-- 		world:add(Explosion(self.pos.x + lume.random(-10, 10), self.pos.y + lume.random(-10, 10)))
 	-- 	end)
+	-- end
+
+	-- drop coin
+	-- if lume.random(0,1) == 1 then
+	local coin = Coin(self.pos.x, self.pos.y)
+	coin.movable.velocity.x = lume.randomchoice({-100,100})
+	coin.movable.velocity.y = lume.randomchoice({-50,50})
+	world:add(coin)
 	-- end
 
 	screen:setShake(8)

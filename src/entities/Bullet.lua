@@ -68,9 +68,6 @@ function Bullet:moveRelativeToAngleAndPosition(x, y)
 end
 
 function Bullet:onCollision(other, delta)
-	if other.isEnemy and other.isAlive then
-		self:die()
-	end
 end
 
 function Bullet:die()

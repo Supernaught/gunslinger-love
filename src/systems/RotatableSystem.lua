@@ -2,7 +2,7 @@
 -- RotatableSystem
 -- by Alphonsus
 --
--- required: self.rotatable = {speed = 0, velocity = 0, acceleration = 0, drag = 0, maxVelocity = 1 }
+-- required: self.rotatable = {speed = 0, velocity = 0, acceleration = 0, drag = 0, maxVelocity = nil }
 --
 
 local lume = require "lib.lume"

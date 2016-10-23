@@ -43,7 +43,7 @@ function SpriteSystem:process(e, dt)
     love.graphics.setColor(255, 255, 255, math.max(0, math.min(1, alpha)) * 255)
 
     if e.spark then
-        -- love.graphics.setShader(assets.spark_shader)
+        love.graphics.setShader(assets.sparkShader)
         timer.after(0.02, function() e.spark = false end)
     end
 
@@ -57,9 +57,11 @@ function SpriteSystem:process(e, dt)
         love.graphics.draw(sprite, pos.x, pos.y, r, sx, sy, ox, oy)
     end
 
-    -- if e.draw then
-    --     e:draw(dt)
-    -- end
+    if e.draw then
+        e:draw(dt)
+    end
+
+    love.graphics.setShader()
 
     -- PaletteSwitcher:set()
 end
